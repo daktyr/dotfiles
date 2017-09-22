@@ -1,0 +1,9 @@
+[alias]
+  tree = log --pretty=oneline --graph --decorate --all
+[color]
+	ui = true
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore
+[push]
+	default = simple
