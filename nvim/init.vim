@@ -40,6 +40,7 @@ set colorcolumn=+1
 set clipboard+=unnamedplus
 set formatoptions=tcrq
 set title
+set termguicolors
 
 autocmd BufWritePre * %s/\s\+$//e
 " fix syntax highlighting for slim
@@ -86,10 +87,18 @@ nmap     <C-c> <esc>
 vnoremap <C-c> <esc>
 cnoremap <C-c> <esc>
 inoremap <C-c> <esc>
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 nnoremap <C-@> :bp<CR>
 nnoremap <F7> mzgg=G`z
 nnoremap <left>  <c-w>H
@@ -202,3 +211,24 @@ color tomorrow-night-eighties
 set laststatus=2
 set statusline=\ %f\ %{StatusLineGit(fugitive#head())}%m%r
 set statusline+=%=\ %l/%L:%c\ [%P]\ [%{strlen(&fenc)?&fenc:'none'}]%y
+
+" ------------------------------------------------------------------------------
+" Terminal
+" ------------------------------------------------------------------------------
+
+let g:terminal_color_0 = '#000000'
+let g:terminal_color_1 = '#c37372'
+let g:terminal_color_2 = '#72c373'
+let g:terminal_color_3 = '#c2c372'
+let g:terminal_color_4 = '#7372c3'
+let g:terminal_color_5 = '#c372c2'
+let g:terminal_color_6 = '#72c2c3'
+let g:terminal_color_7 = '#d9d9d9'
+let g:terminal_color_8 = '#323232'
+let g:terminal_color_9 = '#dbaaaa'
+let g:terminal_color_10 = '#aadbaa'
+let g:terminal_color_11 = '#dadbaa'
+let g:terminal_color_12 = '#aaaadb'
+let g:terminal_color_13 = '#dbaada'
+let g:terminal_color_14 = '#aadadb'
+let g:terminal_color_15 = '#ffffff'

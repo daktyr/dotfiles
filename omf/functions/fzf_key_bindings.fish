@@ -1,0 +1,1 @@
+/Users/daktyr/.fzf/shell/key-bindings.fish

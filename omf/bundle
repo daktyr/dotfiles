@@ -1,3 +1,6 @@
 package asdf
+package fzf
+package git-flow
+package pj
 theme default
 theme taktoa
