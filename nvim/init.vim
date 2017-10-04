@@ -54,8 +54,12 @@ autocmd FileType elixir inoremap ip<tab> require IEx; IEx.pry
 " Functions
 " ------------------------------------------------------------------------------
 
-function! StatusLineGit(branchname)
-  return strlen(a:branchname) ? '('.a:branchname.')' : '(-)'
+function! FzfFiles(branchname)
+  if strlen(a:branchname)
+    :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))
+  else
+    :Files
+  endif
 endfunction
 
 function! BuildComposer(info)
@@ -76,7 +80,7 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 nnoremap j gj
 nnoremap k gk
-nnoremap <Leader>o :Files<CR>
+nnoremap <Leader>o :call FzfFiles(fugitive#head())<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 vnoremap < <gv
@@ -209,7 +213,7 @@ color tomorrow-night-eighties
 " ------------------------------------------------------------------------------
 
 set laststatus=2
-set statusline=\ %f\ %{StatusLineGit(fugitive#head())}%m%r
+set statusline=\ %f\ %{fugitive#statusline()}%m%r
 set statusline+=%=\ %l/%L:%c\ [%P]\ [%{strlen(&fenc)?&fenc:'none'}]%y
 
 " ------------------------------------------------------------------------------
