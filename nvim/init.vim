@@ -37,7 +37,7 @@ set copyindent
 set showmatch
 set textwidth=80
 set colorcolumn=+1
-set clipboard+=unnamedplus
+set clipboard=unnamed
 set formatoptions=tcrq
 set title
 set termguicolors
@@ -54,6 +54,7 @@ autocmd FileType elixir inoremap ip<tab> require IEx; IEx.pry
 " Functions
 " ------------------------------------------------------------------------------
 
+" or let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
 function! FzfFiles(branchname)
   if strlen(a:branchname)
     :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))
@@ -77,7 +78,7 @@ endfunction
 " ------------------------------------------------------------------------------
 
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> <leader>sv :source $MYVIMRC<CR>
 nnoremap j gj
 nnoremap k gk
 nnoremap <Leader>o :call FzfFiles(fugitive#head())<CR>
@@ -91,25 +92,21 @@ nmap     <C-c> <esc>
 vnoremap <C-c> <esc>
 cnoremap <C-c> <esc>
 inoremap <C-c> <esc>
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-nnoremap <C-@> :bp<CR>
+tnoremap <A-h> <C-\><C-n>:TmuxNavigateLeft<cr>
+tnoremap <A-j> <C-\><C-n>:TmuxNavigateDown<cr>
+tnoremap <A-k> <C-\><C-n>:TmuxNavigateUp<cr>
+tnoremap <A-l> <C-\><C-n>:TmuxNavigateRight<cr>
+tnoremap <A-\> <C-\><C-n>:TmuxNavigatePrevious<cr>
+nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
 nnoremap <F7> mzgg=G`z
-nnoremap <left>  <c-w>H
-nnoremap <down>  <c-w>J
-nnoremap <up>    <c-w>K
-nnoremap <right> <c-w>L
-" map <CR> :nohl<cr>
+noremap <Up> :res +1<CR>
+noremap <Down> :res -1<CR>
+noremap <Left> :vertical resize -1<CR>
+noremap <Right> :vertical resize +1<CR>
 cmap w!! w !sudo tee % >/dev/null
 nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
@@ -155,6 +152,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/vim-slash'
 Plug 'farmergreg/vim-lastplace'
 Plug 'sjl/gundo.vim'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
