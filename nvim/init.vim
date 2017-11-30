@@ -41,6 +41,8 @@ set clipboard=unnamed
 set formatoptions=tcrq
 set title
 set termguicolors
+set inccommand=split
+set grepprg=rg\ --vimgrep
 
 autocmd BufWritePre * %s/\s\+$//e
 " fix syntax highlighting for slim
@@ -53,15 +55,6 @@ autocmd FileType elixir inoremap ip<tab> require IEx; IEx.pry
 " ------------------------------------------------------------------------------
 " Functions
 " ------------------------------------------------------------------------------
-
-" or let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
-function! FzfFiles(branchname)
-  if strlen(a:branchname)
-    :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))
-  else
-    :Files
-  endif
-endfunction
 
 function! BuildComposer(info)
   if a:info.status != 'unchanged' || a:info.force
@@ -81,7 +74,7 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :source $MYVIMRC<CR>
 nnoremap j gj
 nnoremap k gk
-nnoremap <Leader>o :call FzfFiles(fugitive#head())<CR>
+nnoremap <Leader>o :Files<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
 vnoremap < <gv
@@ -97,6 +90,7 @@ tnoremap <A-j> <C-\><C-n>:TmuxNavigateDown<cr>
 tnoremap <A-k> <C-\><C-n>:TmuxNavigateUp<cr>
 tnoremap <A-l> <C-\><C-n>:TmuxNavigateRight<cr>
 tnoremap <A-\> <C-\><C-n>:TmuxNavigatePrevious<cr>
+tnoremap <esc> <C-\><C-n>
 nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
@@ -153,14 +147,37 @@ Plug 'junegunn/vim-slash'
 Plug 'farmergreg/vim-lastplace'
 Plug 'sjl/gundo.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-repeat'
+Plug 'Yggdroot/indentLine'
+Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
+
+" ------------------------------------------------------------------------------
+" indentLine
+" ------------------------------------------------------------------------------
+
+let g:indentLine_char = '¦'
 
 " ------------------------------------------------------------------------------
 " Fzf
 " ------------------------------------------------------------------------------
 
+let FZF_DEFAULT_COMMAND='rg --files'
 let g:fzf_layout = { 'down': '~20%' }
+
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+" command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " ------------------------------------------------------------------------------
 " Ale
