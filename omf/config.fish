@@ -6,7 +6,7 @@ set -x ELIXIR_EDITOR atom
 set -x BUNDLE_EDITOR nvim
 # set -x ECTO_EDITOR vim
 # set -x ELIXIR_EDITOR "vim +__LINE__ __FILE__"
-set -x FZF_DEFAULT_COMMAND 'rg --files'
+set -x FZF_DEFAULT_COMMAND 'rg --files --hidden'
 
 # turn on history for IEX
 set -x ERL_AFLAGS "-kernel shell_history enabled"

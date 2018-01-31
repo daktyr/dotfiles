@@ -91,6 +91,7 @@ tnoremap <A-k> <C-\><C-n>:TmuxNavigateUp<cr>
 tnoremap <A-l> <C-\><C-n>:TmuxNavigateRight<cr>
 tnoremap <A-\> <C-\><C-n>:TmuxNavigatePrevious<cr>
 tnoremap <esc> <C-\><C-n>
+tnoremap <A-[> <Esc>
 nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
@@ -150,6 +151,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-repeat'
 Plug 'Yggdroot/indentLine'
 Plug 'machakann/vim-highlightedyank'
+Plug 'danro/rename.vim'
 
 call plug#end()
 
@@ -163,8 +165,8 @@ let g:indentLine_char = '¦'
 " Fzf
 " ------------------------------------------------------------------------------
 
-let FZF_DEFAULT_COMMAND='rg --files'
-let g:fzf_layout = { 'down': '~20%' }
+let FZF_DEFAULT_COMMAND='rg --files --hidden'
+let g:fzf_layout = { 'down': '~27%' }
 
 " --column: Show column number
 " --line-number: Show line number
@@ -177,14 +179,14 @@ let g:fzf_layout = { 'down': '~20%' }
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 " command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --hidden --line-number --no-heading --fixed-strings --ignore-case --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " ------------------------------------------------------------------------------
 " Ale
 " ------------------------------------------------------------------------------
 
 " wait a bit before checking syntax in a file, if typing
-let g:ale_lint_delay = 5000
+let g:ale_lint_delay = 1000
 " use global eslint
 let g:ale_javascript_eslint_use_global = 1
 " only use es6 for js
@@ -192,6 +194,7 @@ let g:ale_linters = {'javascript': ['eslint']}
 " always keep opened sign column
 let g:ale_sign_column_always = 1
 let g:ale_set_signs = 1
+let g:ale_set_highlights = 0
 
 " ------------------------------------------------------------------------------
 " NERDTree
@@ -213,6 +216,7 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " ------------------------------------------------------------------------------
 
 let test#strategy = "neovim"
+" command! -nargs=* DockerTests let test#ruby#rspec#executable = 'rspec'
 
 " ------------------------------------------------------------------------------
 " Theme
