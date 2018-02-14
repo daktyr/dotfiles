@@ -151,7 +151,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-repeat'
 Plug 'Yggdroot/indentLine'
 Plug 'machakann/vim-highlightedyank'
-Plug 'danro/rename.vim'
+Plug 'tpope/vim-eunuch'
 
 call plug#end()
 
